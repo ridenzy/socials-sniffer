@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "socials-sniffer"
+version = "0.1.1"
+description = "Socials Sniffer tooling"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "certifi==2025.11.12",
+  "charset-normalizer==3.4.4",
+  "decorator==4.4.2",
+  "idna==3.11",
+  "ImageIO==2.37.2",
+  "imageio-ffmpeg==0.6.0",
+  "instagrapi==2.1.3",
+  "moviepy==1.0.3",
+  "numpy==2.4.0",
+  "pillow==12.0.0",
+  "proglog==0.1.12",
+  "pycryptodomex==3.21.0",
+  "pydantic==2.10.1",
+  "pydantic_core==2.27.1",
+  "PySocks==1.7.1",
+  "requests==2.32.4",
+  "tqdm==4.67.1",
+  "typing_extensions==4.15.0",
+  "urllib3==2.6.2"
+]
+
+[project.scripts]
+socials-sniffer-mediaid = "program_env.instagram.data_collectors.collectors.mediaID:main"
+socials-sniffer-usernames = "program_env.instagram.data_collectors.collectors.userNames:main"
+
+[tool.setuptools]
+package-dir = {"" = "."}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["program_env*"]

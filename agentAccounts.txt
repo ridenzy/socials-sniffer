@@ -1,0 +1,151 @@
+
+
+
+SCRAPING_AGENTS = [
+    {"username": "k_agent02", "password": "V6y6$UetQT$yn-V"}, # Login failed: 565 Server Error: 
+    {"username": "k_agent03", "password": "+#r@g#usus!2E"}, # Challenge required during login. Check Instagram manually.
+    {"username": "k_agent04", "password": "nR1S53dgKsa$$@M"}, #   [DG-6yiTCYMA] Postcode ID failed for this target account digital.launchpad:    login_required
+    {"username": "k_agent05", "password": "Z0WjAVj!58zfg@ISOS"}, # [DE0GMyqiJrC] Postcode ID failed for this target account digital.launchpad:  login_required
+    {"username": "k_agent06", "password": "ak*@d20#02@q8Q"}, # [DDPoNDzCDUZ] Postcode ID failed for this target account digital.launchpad:  login_required
+    {"username": "k_agent07", "password": "ak*@d20#02@q8Q!"}, # [-] Challenge required during login. Check Instagram manually.
+    {"username": "k_agent08", "password": "2E%H2dE%Jv9q6!8jx$G#"}, # [DCUUiZ3CwoA] Postcode ID failed for this target account digital.launchpad:   login_required
+
+    {"username": "t_agent02", "password": "zuSLh7Cg1D"}, # [DBZRBYoipJY] Postcode ID failed for this target account digital.launchpad:  login_required
+    {"username": "t_agent03", "password": "d&'5BBH?n3KW4JF"}, # [C-k4_ArClaU] Postcode ID failed for this target account digital.launchpad:  challenge_required
+    {"username": "t_agent05", "password": "7ts2QzeL6QhV6z9"}, # [-] Challenge required during login. Check Instagram manually.
+    {"username": "t_agent06", "password": "boY202un_Sh1#&"}, # [C9nCvoYCh0P] Postcode ID failed for this target account digital.launchpad:  challenge_required
+    {"username": "t_agent08", "password": "htUq$T7%Er@m4M"}, # [C8r4zO9iWZi] Postcode ID failed for this target account digital.launchpad:  challenge_required
+    {"username": "t_agent09", "password": "@S#$hodjbayob2+&@002"}, # [C7XA4zfCx0t] Postcode ID failed for this target account digital.launchpad:  login_required
+
+    {"username": "ti_agent01", "password": "3KRz#kak*@d20#02@q"}, # Ended program
+    {"username": "ti_agent02", "password": "9q6!8jx$Gda!!ak*"}, # [DIFUbkHARRW] Postcode ID failed for this target account jordanwelchextended: login_required
+    {"username": "ti_agent03", "password": "@!DWba3KRz#ksiYun#@#"}, # [DIFUbkHARRW] Postcode ID failed for this target account jordanwelchextended: login_required
+    {"username": "ti_agent04", "password": "#02@q8QsiYun#@#"}, #  Ending program ---
+    {"username": "ti_agent05", "password": "E%Jv9q6!8jx$G#"}, # [-] Login failed: ChallengeResolve:
+    {"username": "ti_agent06", "password": "?htUq$T7%Er@m4M"}, # [-] Login failed: ChallengeResolve:
+    {"username": "ti_agent07", "password": "RRaY@6&#5p8DqTQn"}, #  [CQ-l3sQlSxC] Postcode ID failed for this target account africasyoungentrepreneurs:  login_required
+    {"username": "ti_agent08", "password": "ayo_YunuF7C0%w!csad2002"}, # 
+    {"username": "ti_agent09", "password": "cIkU)Q_t+E+#"}, # 
+    {"username": "ti_agent10", "password": "@S!7ho#$syu@"}, # 
+
+]
+
+
+DM_AGENTS = {
+
+    {"username": "jordan.insights_", "password": "SKJE@9zmjJ6GYXv"}, #   Km101
+    {"username": "wallstreet.insights", "password": "SKJE@9zmjJ6GYXv"}, # Km101
+    {"username": "nova.royale_", "password": "+#r@g#usus!2EH2"}, #   Km101
+    {"username": "reece.royale", "password": "SKJE@9zmjJ6GYXv"}, #  Km101
+    {"username": "buffet.insights", "password": "F3UCtwR,Sd9==%*"}, #   Km101
+    {"username": "tycoon.insights", "password": "2EH2dEJv9q6!8jx$Gda!!ak*@d20#02"}, #  Km101
+
+    {"username": "tomi.in.threads", "password": "+#r@g#usus!2EH2"}, #   TAfits 
+    {"username": "milan.styled", "password": "SKJE@9zmjJ6GYXv"}, # TAfits
+    {"username": "armani.styled", "password": "@2EH2dEJv9q"}, #   TAfits 
+    {"username": "reece.in.threads", "password": "Gda!!ak*@d20#02"}, # TAfits
+    {"username": "vincenzo.in.threads", "password": "E@9zmjJ6GYXv"}, #   TAfits 
+    {"username": "fabio.styled", "password": "Jv9q6!8jx$Gda!!ak"}, # TAfits
+    
+
+    
+    
+
+}
+
+
+
+trippleafitsaccessories : ( IG & TT  )  
+Wba3KRz#kak*
+
+( X ) : trippleafits →  +#r@g#usus!2EH
+
+Kingsmaking101official: ( IG & TT & X )  kingsmaking101_
++#r@g#usus!2EH2
+
+
+
+
+
+
+🇩🇪 GERMANY
+🎉 Club & Events
+👕 Fashion & Lifestyle
+@nordic_scott – Fashion/photography influencer with bold streetwear vibes.
+
+@streetandgentle – Frankfurt-based, blending elegance and street fashion.
+
+@moritz.taylor – Munich-based fashion & lifestyle influencer.
+
+@gmbh_official – Berlin fashion brand pushing progressive, urban visuals.
+
+
+
+
+🇳🇬 NIGERIA
+🎉 Club & Events
+@quacktailslagos – Creative cocktail brand with Lagos nightlife roots.
+
+@wbar_lagos – Popular urban-lux bar and events spot.
+
+@lighthouseafrobeats – Curators of Lagos nightlife + afrobeats vibes.
+
+@culledlagos – Alté-inspired urban party/events brand.
+
+@jollofandfrolics – Events for urban youth featuring food, music, culture.
+
+👕 Fashion & Lifestyle
+@ashleyokoli – Alté fashion icon, stylist, and unisex clothing designer.
+
+@afwnigeria – Africa Fashion Week Nigeria, showcasing emerging creatives.
+
+@vvslagos – Creative convention for Lagos-based youth & future thinkers.
+
+@girlisposh – Lifestyle and creative content strategist with a Lagos vibe.
+
+
+
+
+🇬🇧 UNITED KINGDOM
+🎉 Club & Events
+@dltbrunch – Bottomless brunch x urban nightlife crossover.
+
+@ – Legendary Black British party collective.
+
+@no_requests.ldn – Raw London underground party culture.
+
+@shabba.party – Carribean/dancehall party brand in the UK.
+
+@ – Urban lifestyle parties and community.
+
+👕 Fashion & Lifestyle
+@emsladedmonson – Sustainable fashion curator from London.
+
+@laura.jackson – Modern lifestyle & urban hosting entrepreneur.
+
+@sophiehannah – Beauty/fashion creator with heavy urban Gen Z reach.
+
+
+
+
+🇺🇸 USA
+🎉 Club & Events
+@everybodyhateschrisss – NYC urban party plug with amapiano/hip-hop heat.
+
+@everybodyhateslacey – NYC events with authentic, underground energy.
+
+@everydaypeople – Iconic Black joy party brand across NYC/LA.
+
+@trapkaraokelive – Hip-hop karaoke turned cultural movement.
+
+@rumandbassnyc – Caribbean party culture from NYC.
+
+@housenoir.world – Afrohouse culture + curated Black nightlife experiences.
+
+👕 Fashion & Lifestyle
+@mizzlesworld – NYC streetwear + lifestyle content creator.
+
+@nlewstyles – Stylish influencer with a strong urban wardrobe.
+
+@magicfashionevents – Fashion x urban culture events hub.
+
