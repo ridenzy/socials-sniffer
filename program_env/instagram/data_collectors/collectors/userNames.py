@@ -50,13 +50,13 @@ def main() -> None:
 
 
     # All scraped mediaID Json data amd assigned variables
-    storage_MediaID = BASE_DIR / "program_env" / "instagram" / "data_collectors" / "raw-data" / "all-scraped-users-media-id.json"
+    storage_MediaID = BASE_DIR / "program_env" / "instagram" / "data_collectors" / "storage" / "raw-data" / "all-scraped-users-media-id.json"
     create_json_if_not_exists(storage_MediaID)
     frame = read_json(storage_MediaID)
 
 
     # All scraped userNames Json data amd assigned variables
-    storage_UserNames = BASE_DIR / "program_env" / "instagram" / "data_collectors" / "raw-data" / "all-scraped-user-data.json"
+    storage_UserNames = BASE_DIR / "program_env" / "instagram" / "data_collectors" / "storage" / "raw-data" / "all-scraped-user-data.json"
     create_json_if_not_exists(storage_UserNames)
     frame_Usernames = read_json(storage_UserNames)
 

@@ -69,7 +69,7 @@ def main():
 
 
     # Grab Storage json files
-    storage = BASE_DIR / "program_env" / "instagram" / "data_collectors" / "raw-data" / "all-scraped-users-media-id.json"
+    storage = BASE_DIR / "program_env" / "instagram" / "data_collectors" / "storage" / "raw-data" / "all-scraped-users-media-id.json"
     create_json_if_not_exists(storage)
     frame = read_json(storage)
 
