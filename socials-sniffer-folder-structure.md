@@ -74,3 +74,6 @@ export {
         body ?
     }
 }
+
+
+(mediaID | userFollowStats) --> userNames (gets likers and commenters from media) --> userProfile ( standardizes the users profile data and also updates them)

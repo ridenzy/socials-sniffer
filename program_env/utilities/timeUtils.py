@@ -51,6 +51,62 @@ def random_delay(min_seconds: int, max_seconds: int) -> int:
     return random.randint(min_seconds, max_seconds)
 
 
-def human_sleep(min_s=5, max_s=12):
+
+def scraping_delay_profile(
+    mode: str = "normal",
+    aggressiveness: int = 1
+) -> tuple[int, int]:
+    """
+    Generate (min_seconds, max_seconds) for scraping delays.
+
+    mode:
+        - "safe"      → very conservative (account longevity)
+        - "normal"    → balanced
+        - "aggressive"→ faster but riskier
+
+    aggressiveness:
+        1 (lowest) → 5 (highest)
+    """
+
+    if aggressiveness < 1 or aggressiveness > 5:
+        raise ValueError("aggressiveness must be between 1 and 5")
+
+    profiles = {
+        "safe": {
+            1: (20, 45),
+            2: (18, 40),
+            3: (15, 35),
+            4: (12, 30),
+            5: (10, 25),
+        },
+        "normal": {
+            1: (12, 25),
+            2: (10, 22),
+            3: (8, 18),
+            4: (6, 15),
+            5: (5, 12),
+        },
+        "aggressive": {
+            1: (8, 15),
+            2: (6, 12),
+            3: (5, 10),
+            4: (4, 8),
+            5: (3, 6),
+        },
+    }
+
+    if mode not in profiles:
+        raise ValueError("mode must be: safe, normal, or aggressive")
+
+    return profiles[mode][aggressiveness]
+
+
+
+#def human_sleep(min_s=5, max_s=12):
+#    delay = random_delay(min_s, max_s)
+#    countdown_inline(delay)
+
+def human_sleep(mode="normal", aggressiveness=2):
+    min_s, max_s = scraping_delay_profile(mode, aggressiveness)
     delay = random_delay(min_s, max_s)
     countdown_inline(delay)

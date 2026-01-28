@@ -1,6 +1,5 @@
-from program_env.utilities.timeUtils import (
-    countdown
-)
+
+import sys
 from datetime import date
 
 
@@ -10,9 +9,12 @@ def parseAgency(agents_,agentsType_,agentsNumber_,agentIndex_,agencyDict_) -> di
     agents,agentsNumber,agentIndex,agentsType,agency = agents_,agentsNumber_,agentIndex_,agentsType_,agencyDict_
 
     if(agentsNumber > len(agents[agentsType])):
-        print(f"\n -- Invalid agensNumber was given {agentsNumber} | we have agent range from 1 - {len(agents[agentsType])} --\n -- Exiting program --")
+        print(f"\n -- Invalid agensNumber was given {agentsNumber} | we have agent range from 1 - {len(agents[agentsType])} --\n -- Exiting program --\n")
+        return agency
     
-    print(f"\ntrying agent number {agentsNumber} out of {len(agents[agentsType])}")
+    
+    #sys.stdout.write(f"\rtrying agent number {agentsNumber} out of {len(agents[agentsType])}")
+    #sys.stdout.flush()
 
 
     ACCOUNT_USERNAME = agents[agentsType][agentIndex]["username"]
@@ -27,35 +29,22 @@ def parseAgency(agents_,agentsType_,agentsNumber_,agentIndex_,agencyDict_) -> di
     agentDaysRefresh = 5
     #print(f"\n -- {days_between} --")
 
-
-    if(timeOutError != ""):
-        print(f"\n --- Unresolved Timeout Error issue in JSON file --> agents.json | for Agent username --> {ACCOUNT_USERNAME}")
-        criticalCheckpoint1 = False
-        
-    else:
-        criticalCheckpoint1 = True
-    
-        #return
-
-    #print(f"\n today is {today}  |  lastTimeUsed is {lastTimeUsed} ")
-    
-    #print(f"\n 1--- criticalCheckpoint1 is --> {criticalCheckpoint1}")
-    
-    if(((days_between <= agentDaysRefresh) and (today != lastTimeUsed) and (lastTimeUsed != "")) or ((today == lastTimeUsed) and days_between == 0)):
-        print(f"\nAgent still in it's refresh phase with {days_between} out of {agentDaysRefresh} days left | for Agent username --> {ACCOUNT_USERNAME}")
+    if((timeOutError != "") or ((days_between <= agentDaysRefresh) and (today != lastTimeUsed) and (lastTimeUsed != "")) or ((today == lastTimeUsed) and days_between == 0)):
+        if(timeOutError != ""):
+            print(f"\n --- Unresolved Timeout Error issue in JSON file --> agents.json | for Agent username --> {ACCOUNT_USERNAME}")
+        elif(lastTimeUsed != ""):
+            print(f"\nAgent still in it's refresh phase with {days_between} out of {agentDaysRefresh} days left | for Agent username --> {ACCOUNT_USERNAME}")
         criticalCheckpoint1 = False
     else:
         criticalCheckpoint1 = True
-        #return
 
-    #print(f"\n 2--- criticalCheckpoint1 is --> {criticalCheckpoint1}")
 
     if(criticalCheckpoint1):
         print(f"\nFound adequate agent to use  -->  {ACCOUNT_USERNAME} | {ACCOUNT_PASSWORD}")
         agency = {"ACCOUNT_USERNAME":ACCOUNT_USERNAME, "ACCOUNT_PASSWORD":ACCOUNT_PASSWORD, "lastTimeUsed":lastTimeUsed, "timeOutError":timeOutError,"checkPoint":True,"agentIndex":agentIndex}
         #countdown(10)
 
-    print("\n\n ---------------------------------------- ")
+    #print("\n\n ---------------------------------------- ")
 
     return agency
     
