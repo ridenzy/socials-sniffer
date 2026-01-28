@@ -3,6 +3,7 @@ virtual-env/
 .venv/
 venv/
 
+
 # Python cache
 __pycache__/
 *.pyc
@@ -14,3 +15,10 @@ build/
 
 # OS junk
 .DS_Store
+
+
+# Project files
+program_env/utilities/agents/
+program_env/instagram/data_collectors/storage/
+program_env/utilities/notes.txt
+biz-plan.md
