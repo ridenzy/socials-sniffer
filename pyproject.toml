@@ -33,6 +33,8 @@ dependencies = [
 [project.scripts]
 socials-sniffer-mediaid = "program_env.instagram.data_collectors.collectors.mediaID:main"
 socials-sniffer-usernames = "program_env.instagram.data_collectors.collectors.userNames:main"
+socials-sniffer-userprofiles = "program_env.instagram.data_collectors.collectors.userProfile:main"
+socials-sniffer-userfolowstats = "program_env.instagram.data_collectors.collectors.userFollowStats:main"
 
 [tool.setuptools]
 package-dir = {"" = "."}
