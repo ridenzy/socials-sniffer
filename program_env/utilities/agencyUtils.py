@@ -30,9 +30,9 @@ def parseAgency(agents_,agentsType_,agentsNumber_,agentIndex_,agencyDict_) -> di
     #print(f"\n -- {days_between} --")
 
     if((timeOutError != "") or ((days_between <= agentDaysRefresh) and (today != lastTimeUsed) and (lastTimeUsed != "")) or ((today == lastTimeUsed) and days_between == 0)):
-        if(timeOutError != ""):
+        if(timeOutError != ""): #prompt user to ask if issue has been resolved , if the issue has beeen resolved,clear the issue string
             print(f"\n --- Unresolved Timeout Error issue in JSON file --> agents.json | for Agent username --> {ACCOUNT_USERNAME}")
-        elif(lastTimeUsed != ""):
+        elif(lastTimeUsed != ""): 
             print(f"\nAgent still in it's refresh phase with {days_between} out of {agentDaysRefresh} days left | for Agent username --> {ACCOUNT_USERNAME}")
         criticalCheckpoint1 = False
     else:
@@ -55,6 +55,8 @@ def runAgency(setAgentsNumberToUse_=0,agentsType_="SCRAPING_AGENTS",agents_={}) 
     number = setAgentsNumberToUse_ # Set an agent manually based on number not index
     agentsType = agentsType_
     agents = agents_
+
+    # if agents is empty, prompt user to create an instagram agent account , input username, password 
 
     # My agents Json Data and assigned variables
     

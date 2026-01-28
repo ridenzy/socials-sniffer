@@ -67,6 +67,7 @@ def main():
     frame = read_json(storage)
 
     agents_ = BASE_DIR / "program_env" / "utilities" / "agents" / "agents.json"
+    create_json_if_not_exists(agents_)
     agents = read_json(agents_)
     agentsType = "SCRAPING_AGENTS"
 
