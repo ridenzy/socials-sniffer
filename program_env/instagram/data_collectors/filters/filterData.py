@@ -8,6 +8,11 @@ from program_env.utilities.jsonUtils import (
     write_json,
 )
 
+from program_env.utilities.filterUtils import (
+    captureDictKeyValues,
+    generateKeywordCloud
+)
+
 
 BASE_DIR = Path(__file__).resolve().parents[4]
 
@@ -22,7 +27,9 @@ def main() -> None:
     # All scraped userNames Json data amd assigned variables
     storage_UserNames = BASE_DIR / "program_env" / "instagram" / "data_collectors" / "storage" / "raw-data" / "all-scraped-user-data.json"
     create_json_if_not_exists(storage_UserNames)
-    frameUserData = read_json(storage_UserNames)
+    userData = read_json(storage_UserNames)
+
+    # filter function queries
 
 
     # function call to get followers vs following amount
@@ -33,7 +40,11 @@ def main() -> None:
     # Function call to filter for verified users
     # Function call to filter for business users
     # Function call to filter for media count
+
+
     # Function call to filter for keywords in biography 
+    bio_keywords_list = captureDictKeyValues(userData,"biography")
+    bio_keywords_cloud = generateKeywordCloud(bio_keywords_list)
 
 
 

@@ -7,11 +7,15 @@ from program_env.utilities.jsonUtils import (
 )
 
 from program_env.utilities.timeUtils import (
-    human_sleep
+    human_sleep,
+    reset_rate_limits
 )
 
 from program_env.utilities.agencyUtils import (
-    runAgency
+    runAgency,
+    login_manager,
+    logout_manager,
+    resolve_exit_reason,
 )
 
 from pathlib import Path
@@ -50,6 +54,11 @@ AGENTS_NUMBER_TO_USE_IF_I_WANT_TO = 0      # from 1 upwards
 
 
 def main():
+    def mark_network_failure():
+        nonlocal stop, timeOutError
+        stop = True
+        timeOutError = "network_failure"
+    
     print("Running socials-sniffer mediaID collector")
 
 
@@ -78,7 +87,7 @@ def main():
 
 
     
-
+    
    
     max_mash = 300
     min_mash = 200
@@ -105,62 +114,47 @@ def main():
 
     settings_path = BASE_DIR / "program_env" / "utilities" / "agents" / "sessions" / f"{ACCOUNT_USERNAME}.json" # Create settings file per agent
 
-    cl = Client()
 
+    cl = Client()
+    stop=False
     if(criticalCheckpoint2):
         print("\n --- Checkpoint 2 passed")
 
+        
 
-        if settings_path.exists() and settings_path.stat().st_size > 0: # Load settings BEFORE login
-            try:
-                cl.load_settings(settings_path)
-                try:
-                    cl.account_info()  # or cl.user_info_v1(cl.user_id)
-                    criticalCheckpoint3 = True
-                except Exception as errors:
-                    # session expired → full login
-                    try:
-                        cl.login(ACCOUNT_USERNAME, ACCOUNT_PASSWORD) # login to agent account  | Login only if needed
-                        #cl.login("armani.styled","@2EH2dEJv9q")
-                        print("\n 1 i logged in")
-                        cl.dump_settings(settings_path)
-                        print("\n 1 i dumped")
-                        criticalCheckpoint3 = True
-                    except Exception as err:
-                        print(f"\n -- 1 Log in error at --> {err}")
-                        timeOutError = str(err)
-                        for i in error_cage:
-                            if i in str(err):
-                                timeOutError = i
-            except Exception as err:               
-                print(f"\n -- 2 Log in error at --> {err}")
-                timeOutError = str(err)
-                for i in error_cage:
-                    if i in str(err):
-                        timeOutError = i
+        success, state, cl = login_manager(
+            cl=cl,
+            username=ACCOUNT_USERNAME,
+            password=ACCOUNT_PASSWORD,
+            settings_path=settings_path,
+        )
+
+        if not success:
+            if state == "checkpoint":
+                print("🛑 Resolve checkpoint manually, then rerun.")
+                timeOutError = "checkpoint_required"
+            elif state == "session_expired":
+                print("🛑 Session has expired.")
+                timeOutError = "session_expired"
+            else:
+                print("🛑 Login failed — stopping run.")
+                timeOutError = "login_failed"
+            stop = True
+            criticalCheckpoint3 = False
         else:
-            try:
-                cl.login(ACCOUNT_USERNAME, ACCOUNT_PASSWORD) # login to agent account  | Login only if needed
-                #cl.login("armani.styled","@2EH2dEJv9q")
-                print("\n 3 i logged in")
-                cl.dump_settings(settings_path)
-                print("\n 3 i dumped")
-                criticalCheckpoint3 = True
-            except Exception as err:
-                print(f"\n -- 3 Log in error at --> {err}")
-                timeOutError = str(err)
-                for i in error_cage:
-                    if i in str(err):
-                        timeOutError = i
+            criticalCheckpoint3 = True
+
+        print("🚀 Logged in, continuing scraper...")
     else:
         print("---------\n ---- Could not Log into your scraping agent \n--------")
         pass
 
 
+
     if(criticalCheckpoint3):
         print("\n --- Checkpoint 3 passed")
         print("\n--- Stalling after  login ---")
-        human_sleep("normal",3)
+        human_sleep("normal",3,reset_rate_limits)
 
         try:
             TARGET_USER_ID = cl.user_id_from_username(TARGET_ACCOUNT)
@@ -230,9 +224,9 @@ def main():
     else:
         pass
 
-    #cl.logout()
-
-    return
+    
+    exit_reason = resolve_exit_reason(timeOutError=timeOutError,stop=stop)
+    logout_manager(cl=cl,reason=exit_reason,settings_path=settings_path,)
 
     
 

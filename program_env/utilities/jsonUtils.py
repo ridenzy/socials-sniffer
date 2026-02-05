@@ -8,7 +8,7 @@ import os
 
 
 # 1. Create a JSON file (if it doesn’t exist)
-def create_json_if_not_exists(file_path, default_data={}):
+def create_json_if_not_exists(file_path, default_data=None):
     """
     Creates a JSON file if it does not exist.
     """
@@ -41,4 +41,12 @@ def write_json(file_path, data):
     with open(file_path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
-
+# 4. delete JSON file function (safe)
+def delete_json(file_path):
+    """
+    Deletes a JSON file if it exists.
+    """
+    if os.path.exists(file_path):
+        os.remove(file_path)
+        return True  # file deleted
+    return False  # file did not exist

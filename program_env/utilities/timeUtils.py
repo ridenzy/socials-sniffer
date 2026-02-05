@@ -4,6 +4,54 @@ import sys
 
 import random
 
+"""
+🎯 Recommended values (based on the scraper)
+---
+🟢 Good default
+MAX_ALLOWED_GAP = 90
+---
+
+Why:
+
+our delays go up to ~45s
+
+Network hiccups can stall for ~10–20s
+
+90s avoids false positives
+
+---
+🔵 Conservative (long runs / laptop use)
+MAX_ALLOWED_GAP = 120
+---
+🔴 Aggressive (short, controlled runs)
+MAX_ALLOWED_GAP = 45
+
+
+I do NOT recommend this for your case.
+"""
+
+LAST_HEARTBEAT = None
+MAX_ALLOWED_GAP = 3600 #( 1 hrs ) #120  # seconds (tune this)
+
+def heartbeat_check(reset_callback=None):
+    global LAST_HEARTBEAT
+
+    now = time.time()
+
+    if LAST_HEARTBEAT is None:
+        LAST_HEARTBEAT = now
+        return False
+
+    gap = now - LAST_HEARTBEAT
+    LAST_HEARTBEAT = now
+
+    if gap > MAX_ALLOWED_GAP:
+        print(f"\n⚠️ Detected system sleep / suspend (gap: {int(gap)}s)")
+        if reset_callback:
+            reset_callback()
+        return True
+
+    return False
 
 
 def countdown(seconds: int) -> None:
@@ -21,11 +69,11 @@ def countdown(seconds: int) -> None:
     print("⏰ Time's up!")
 
 
-
+"""
 def countdown_inline(seconds: int) -> None:
-    """
-    Countdown that updates in-place in the terminal.
-    """
+    
+    #Countdown that updates in-place in the terminal.
+    
     print(f"\n🕒 Waiting {seconds}s before next request")
 
     if seconds < 0:
@@ -37,7 +85,27 @@ def countdown_inline(seconds: int) -> None:
         time.sleep(1)
 
     sys.stdout.write("\r⏰ Time's up!            \n")
+"""
 
+def countdown_inline(seconds: int, reset_callback=None, on_suspend=None) -> None:
+    if seconds < 0:
+        raise ValueError("seconds must be >= 0")
+
+    print(f"\n🕒 Waiting {seconds}s before next request")
+
+    for remaining in range(seconds, 0, -1):
+        if heartbeat_check(reset_callback):
+            print("🔁 Cooldown reset after suspend")
+            if on_suspend:
+                on_suspend()
+            return
+            #return  # exit countdown safely
+
+        sys.stdout.write(f"\r⏳ {remaining} seconds remaining")
+        sys.stdout.flush()
+        time.sleep(1)
+
+    sys.stdout.write("\r⏰ Time's up!            \n")
 
 def random_delay(min_seconds: int, max_seconds: int) -> int:
     """
@@ -106,7 +174,12 @@ def scraping_delay_profile(
 #    delay = random_delay(min_s, max_s)
 #    countdown_inline(delay)
 
-def human_sleep(mode="normal", aggressiveness=2):
+def reset_rate_limits():
+    print("♻️ Resetting rate-limit state")
+    time.sleep(5)  # short safety buffer
+
+def human_sleep(mode="normal", aggressiveness=2, reset_callback=None, on_suspend=None):
     min_s, max_s = scraping_delay_profile(mode, aggressiveness)
     delay = random_delay(min_s, max_s)
-    countdown_inline(delay)
+    #countdown_inline(delay)
+    countdown_inline(delay, reset_callback, on_suspend)

@@ -7,11 +7,15 @@ from program_env.utilities.jsonUtils import (
 )
 
 from program_env.utilities.timeUtils import (
-    human_sleep
+    human_sleep,
+    reset_rate_limits
 )
 
 from program_env.utilities.agencyUtils import (
-    runAgency
+    runAgency,
+    login_manager,
+    logout_manager,
+    resolve_exit_reason,
 )
 
 from program_env.utilities.userDataUtils import (
@@ -39,7 +43,13 @@ AGENTS_NUMBER_TO_USE_IF_I_WANT_TO = 0   # from 1 upwards
 
 
 def main() -> None:
-    print("Running socials-sniffer userProfile collector")
+
+    def mark_network_failure():
+        nonlocal stop, timeOutError
+        stop = True
+        timeOutError = "network_failure"
+
+    print("Running socials-sniffer userNames data collector")
 
 
     criticalCheckpoint1,criticalCheckpoint2,criticalCheckpoint3 = False,False,False
@@ -97,59 +107,45 @@ def main() -> None:
 
 
     cl = Client()
+    stop=False
     if(criticalCheckpoint1):
         print("\n --- Checkpoint 1 passed")
 
-        if settings_path.exists() and settings_path.stat().st_size > 0: # Load settings BEFORE login
-            try:
-                cl.load_settings(settings_path)
-                try:
-                    cl.account_info()  # or cl.user_info_v1(cl.user_id)
-                    criticalCheckpoint2 = True
-                except Exception as errors:
-                    # session expired → full login
-                    try:
-                        cl.login(ACCOUNT_USERNAME, ACCOUNT_PASSWORD) # login to agent account  | Login only if needed
-                        #cl.login("armani.styled","@2EH2dEJv9q")
-                        print("\n 1 i logged in")
-                        cl.dump_settings(settings_path)
-                        print("\n 1 i dumped")
-                        criticalCheckpoint2 = True
-                    except Exception as err:
-                        print(f"\n -- 1 Log in error at --> {err}")
-                        timeOutError = str(err)
-                        for i in error_cage:
-                            if i in str(err):
-                                timeOutError = i
-            except Exception as err:               
-                print(f"\n -- 2 Log in error at --> {err}")
-                timeOutError = str(err)
-                for i in error_cage:
-                    if i in str(err):
-                        timeOutError = i
+        
+
+        success, state, cl = login_manager(
+            cl=cl,
+            username=ACCOUNT_USERNAME,
+            password=ACCOUNT_PASSWORD,
+            settings_path=settings_path,
+        )
+
+        if not success:
+            if state == "checkpoint":
+                print("🛑 Resolve checkpoint manually, then rerun.")
+                timeOutError = "checkpoint_required"
+            elif state == "session_expired":
+                print("🛑 Session has expired.")
+                timeOutError = "session_expired"
+            else:
+                print("🛑 Login failed — stopping run.")
+                timeOutError = "login_failed"
+            stop = True
+            criticalCheckpoint2 = False
         else:
-            try:
-                cl.login(ACCOUNT_USERNAME, ACCOUNT_PASSWORD) # login to agent account  | Login only if needed
-                #cl.login("fabio.styled","Jv9q6!8jx$Gda!!ak")
-                print("\n 3 i logged in")
-                cl.dump_settings(settings_path)
-                print("\n 3 i dumped")
-                criticalCheckpoint2 = True
-            except Exception as err:
-                print(f"\n -- 3 Log in error at --> {err}")
-                timeOutError = str(err)
-                for i in error_cage:
-                    if i in str(err):
-                        timeOutError = i
+            criticalCheckpoint2 = True
+
+        print("🚀 Logged in, continuing scraper...")
     else:
         print("---------\n ---- Could not Log into your scraping agent \n--------")
         pass
 
 
+
     if(criticalCheckpoint2): # access media  and act for Likers
         print("\n --- Checkpoint 2 passed")
         print("\n--- Stalling after  login ---")
-        human_sleep("normal",3)
+        human_sleep("normal",3,reset_rate_limits)
         stop = False
         
         for keys in frame:
@@ -189,7 +185,7 @@ def main() -> None:
                                 print(f"\n Error --> Could not add user who Liked post {err} --- ")
 
                         print("\n--- After checking for likes ---")
-                        human_sleep("safe",2)
+                        human_sleep("safe",2,reset_rate_limits)
 
                         for commenter in cl.media_comments(media_id=TARGET_USERMEDIA_PK_ID):
                             try:
@@ -202,7 +198,7 @@ def main() -> None:
                         for details in userMediaCommenters:
                             details = details.dict()
                             frame_Usernames = runUsernameFrames(frame_Usernames,details)
-                            #print(f"\n Commenters info {details}")
+                            #print(f"\n Commenters info {details}") 
 
                         for details in userMediaLikers:
                             details = details.dict()
@@ -223,7 +219,7 @@ def main() -> None:
                         break
                     
                     print("\n--- After checking for comments and likes ---")
-                    human_sleep("safe",1)
+                    human_sleep("safe",1,reset_rate_limits)
 
                             
                     #criticalCheckpoint3 = True
@@ -253,6 +249,11 @@ def main() -> None:
         write_json(agents_ ,agents)
     else:
         pass
+
+
+    
+    exit_reason = resolve_exit_reason(timeOutError=timeOutError,stop=stop)
+    logout_manager(cl=cl,reason=exit_reason,settings_path=settings_path,)
 
     print("Done with program")
 
